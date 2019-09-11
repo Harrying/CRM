@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.DictDao">
+
+	<select id="getAllRows" resultType="int">
+		select count(*) from product
+	</select>
+
+	<select id="findProductAll" resultType="Product">
+	    select * from product limit #{param1},#{param2}
+	</select>
+	
+	
+	<select id="getAllRowss" resultType="int">
+		select count(*) from storage
+	</select>
+
+	<select id="findStorageAll" resultType="Storage">
+	    select * from storage limit #{param1},#{param2}
+	</select>
+	
+	<select id="findProductBy" resultType="Product">
+	    select * from product
+		where 1=1
+		<if test="param1.prod_name!=null &amp;&amp; param1.prod_name!=''">
+			 and prod_name like "%"#{param1.prod_name}"%"
+		</if>
+		<if test="param1.prod_type!=null &amp;&amp; param1.prod_type!=''">
+			and prod_type = #{param1.prod_type}
+		</if>
+		<if test="param1.prod_batch!=null &amp;&amp; param1.prod_batch!=''">
+			and prod_batch = #{param1.prod_batch}
+		</if>
+		limit #{param2},#{param3}
+	</select>
+	
+	<select id="findStorageBy" resultType="Storage">
+	    select * from storage
+		where 1=1
+		<if test="param1.stk_name!=null &amp;&amp; param1.stk_name!=''">
+			 and stk_name like "%"#{param1.stk_name}"%"
+		</if>
+		<if test="param1.stk_warehourse!=null &amp;&amp; param1.stk_warehourse!=''">
+			and stk_warehourse = #{param1.stk_warehourse}
+		</if>
+		limit #{param2},#{param3}
+	</select>
+	
+</mapper>

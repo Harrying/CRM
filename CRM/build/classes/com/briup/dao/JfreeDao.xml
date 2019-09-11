@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.JfreeDAO">
+
+	<select id="findCustomer" parameterType="String" resultType="Cst_customer">
+		select * from cst_customer
+		where cust_name = #{cust_name}
+	</select>
+
+	<select id="findOrders" parameterType="String" resultType="Orders">
+		select * from orders
+		where odr_customer = #{cust_name}
+	</select>
+
+	<select id="findOrdersLine" parameterType="int" resultType="Orders_line">
+		select * from orders_line
+		where odd_order_id = #{odr_id}
+	</select>
+
+	<select id="findProduct" parameterType="int" resultType="Product">
+		select *
+		from product
+		where prod_id = #{prod_id}
+	</select>
+
+	<select id="findAllCustomer" resultType="int">
+		select count(*) from
+		cst_customer
+	</select>
+
+    <!-- <select id="findCustomerLevel" resultType="map">
+		select
+		cust_level_label,count(*) count from cst_customer group by
+		cust_level_label
+	</select>
+	 -->
+	<select id="findCustomerLevel" resultType="String">
+	   select cust_level_label from cst_customer group by cust_level_label;
+	</select>
+    
+    <select id="findCustomerLevel2" parameterType="String" resultType="int">
+       select count(*) from cst_customer where cust_level_label = #{cust_level_label}
+    </select>
+    
+     <select id="findCustomerCredit" resultType="int">
+        select cust_credit from cst_customer group by cust_credit
+     </select>
+     
+     <select id="findCustomerCredit2" parameterType="int" resultType="int">
+       select count(*) from cst_customer where cust_credit = #{cust_credit}
+     </select>
+     
+      <select id="findCustomerSatisify" resultType="int">
+        select cust_satisfy from cst_customer group by cust_satisfy
+     </select>
+     
+     <select id="findCustomerSatisify2" parameterType="int" resultType="int">
+       select count(*) from cst_customer where cust_satisfy = #{cust_satisfy}
+     </select>
+
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.UserDao">
+
+	<select id="login" parameterType="string" resultType="Sys_user">
+		select *
+		from sys_user
+		where usr_name=#{0} and usr_password=#{1}
+	</select>
+
+	<select id="getAllRole" resultType="Sys_role">
+		select * from sys_role
+	</select>
+
+	<insert id="addRole"  parameterType="Sys_role">
+		insert into sys_role(role_id,role_name,role_desc,role_flag)
+		values(#{role_id},#{role_name},#{role_desc},#{role_flag})
+	</insert>
+	
+	<select id="getOneRole" parameterType="int" resultType="Sys_role">
+		select * from sys_role
+		where role_id=#{role_id}
+	</select>
+	
+	<update id="updateRole" parameterType="Sys_role">
+	   update sys_role set
+	   role_name = #{role_name},role_desc = #{role_desc},role_flag = #{role_flag}
+	   where role_id = #{role_id}
+	</update>
+	
+	<delete id="deleteRole" parameterType="int">
+	   delete from sys_role
+	   where role_id = #{role_id}
+	</delete>
+	
+	<select id="getAllRows" resultType="int">
+	    select count(*) from sys_user
+	</select>
+		
+	<select id="getAllUser" resultType="Sys_user">
+	   select * from sys_user limit #{param1},#{1}	
+	</select>
+	
+	<insert id="addUser"  parameterType="Sys_user">
+		insert into sys_user(usr_id,usr_name,usr_password,usr_flag,usr_role_id)
+		values(#{usr_id},#{usr_name},#{usr_password},#{usr_flag},#{usr_role_id})
+	</insert>
+	
+	<select id="getOneUser" parameterType="int" resultType="Sys_user">
+		select * from sys_user
+		where usr_id = #{usr_id}
+	</select>
+	
+	<update id="updateUser" parameterType="Sys_user">
+	   update sys_user set
+	   usr_name = #{usr_name},usr_password = #{usr_password},usr_flag=#{usr_flag},usr_role_id =#{usr_role_id}
+	   where usr_id = #{usr_id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+	   delete from sys_user
+	   where usr_id = #{usr_id}
+	</delete>
+
+</mapper>

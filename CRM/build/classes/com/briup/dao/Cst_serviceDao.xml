@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.Cst_serviceDao">
+
+	<insert id="save" parameterType="Cst_service" useGeneratedKeys="true"
+		keyProperty="svr_id">
+		insert into
+		cst_service(svr_id,svr_type,svr_title,svr_cust_name,svr_status,svr_request,svr_create_by)
+		values(#{svr_id},#{svr_type},#{svr_title},#{svr_cust_name},#{svr_status},#{svr_request},#{svr_create_by})
+	</insert>
+
+	<select id="findAll" parameterType="int" resultType="Cst_service">
+		select *
+		from cst_service where svr_status ='新创建'
+		limit #{param1},#{param2}
+	</select>
+
+	<select id="getAllRows" resultType="int">
+		select count(*) from
+		cst_service where svr_status='新创建'
+	</select>
+
+	<select id="findAllManagerName" resultType="Sys_user">
+		select * from
+		sys_user where usr_role_id='4'
+	</select>
+
+	<update id="updateCst_service" parameterType="Cst_service">
+		update cst_service
+		set svr_due_to = #{svr_due_to},svr_status='已分配'
+		where svr_id =
+		#{svr_id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from cst_service
+		where svr_id = #{svr_id}
+	</delete>
+
+	<select id="findByHQLCondition" resultType="Cst_service">
+		select * from cst_service
+		where 1=1
+		<if test="param1.svr_cust_name!=null &amp;&amp; param1.svr_cust_name!=''">
+			 and svr_cust_name = #{param1.svr_cust_name}
+		</if>
+		<if test="param1.svr_title!=null &amp;&amp; param1.svr_title!=''">
+			and svr_title = #{param1.svr_title}
+		</if>
+		<if test="param1.svr_type!=null &amp;&amp; param1.svr_type!=''">
+			and svr_type = #{param1.svr_type}
+		</if>
+		and svr_status='新创建'
+		limit #{param2},#{param3}
+	</select>
+
+	<select id="getAllRowss" parameterType="Cst_service" resultType="int">
+		select count(*) from cst_service
+		where svr_status ='新创建'
+		<if test="svr_cust_name!=null &amp;&amp;svr_cust_name!=''">
+			and svr_cust_name = #{svr_cust_name}
+		</if>
+		<if test="svr_title!=null &amp;&amp; svr_title!=''">
+			and svr_title = #{svr_title}
+		</if>
+		<if test="svr_type!=null &amp;&amp; svr_type!=''">
+			and svr_type = #{svr_type}
+		</if>
+	</select>
+
+	<select id="findByfp" parameterType="int" resultType="Cst_service">
+		select *
+		from cst_service 
+		where svr_status='已分配'
+		limit #{param1},#{param2}
+	</select>
+
+	<select id="getAllRows2" resultType="int">
+		select count(*) from
+		cst_service where svr_status='已分配'
+	</select>
+
+	<select id="queryOneByid" parameterType="int" resultType="Cst_service">
+		select * from cst_service where svr_id = #{svr_id}
+	</select>
+
+	<update id="updateinfo" parameterType="Cst_service">
+		update cst_service
+		set svr_deal = #{svr_deal},svr_status = '已处理'
+		where svr_id = #{svr_id}
+	</update>
+
+
+	<select id="findByHQLCondition1" resultType="Cst_service">
+		select * from cst_service
+		where 1=1
+		<if test="param1.svr_cust_name!=null &amp;&amp; param1.svr_cust_name!=''">
+			svr_cust_name = #{param1.svr_cust_name}
+		</if>
+		<if test="param1.svr_title!=null &amp;&amp; param1.svr_title!=''">
+			and svr_title = #{param1.svr_title}
+		</if>
+		<if test="param1.svr_type!=null &amp;&amp; param1.svr_type!=''">
+			and svr_type = #{param1.svr_type}
+		</if>
+		and svr_status='已分配'
+		limit #{param2},#{param3}
+	</select>
+
+	<select id="getAllRowss1" parameterType="Cst_service" resultType="int">
+		select count(*) from cst_service
+		where svr_status ='已分配'
+		<if test="svr_cust_name!=null &amp;&amp; svr_cust_name!=''">
+			and svr_cust_name = #{svr_cust_name}
+		</if>
+		<if test="svr_title!=null &amp;&amp; svr_title!=''">
+			and svr_title = #{svr_title}
+		</if>
+		<if test="svr_type!=null &amp;&amp; svr_type!=''">
+			and svr_type = #{svr_type}
+		</if>
+	</select>
+	
+	<select id="findBycl" parameterType="int" resultType="Cst_service">
+		select *
+		from cst_service where svr_status ='已处理'
+		limit #{param1},#{param2}
+	</select>
+	
+	<select id="getAllRows3" resultType="int">
+		select count(*) from
+		cst_service where svr_status='已处理'
+	</select>
+
+    <update id="Dealresult" parameterType="Cst_service">
+       update cst_service
+       set svr_result = #{svr_result},svr_satisfy = #{svr_satisfy},svr_status = '已归档'
+       where svr_id = #{svr_id}
+    </update>
+    
+</mapper>

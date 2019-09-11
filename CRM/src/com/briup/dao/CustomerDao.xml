@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.CustomerDAO">
+
+	<select id="getAllRows" resultType="int">
+		select count(*) from
+		cst_customer
+	</select>
+
+	<select id="customerPage" resultType="Cst_customer">
+		select * from cst_customer
+		limit #{param1},#{param2}
+	</select>
+
+	<select id="findCustomerPageByCon" resultType="Cst_customer">
+		select * from
+		cst_customer
+		where cust_no = #{param3.cust_no} or cust_name =
+		#{param3.cust_name} or
+		cust_region= #{param3.cust_region} or
+		cust_manager_name =
+		#{param3.cust_manager_name} or cust_level_label=
+		#{param3.cust_level_label}
+		limit #{param1},#{param2}
+	</select>
+
+	<insert id="addCustomer" parameterType="Cst_customer"
+		useGeneratedKeys="true" keyProperty="cust_id">
+		insert into
+		cst_customer(cust_id,cust_no,cust_name,cust_region,cust_manager_name,cust_level_label,
+		cust_satisfy,cust_credit,cust_addr,cust_zip,cust_tel,
+		cust_fax,cust_website,cust_licence_no,cust_chieftain,
+		cust_bankroll,cust_turnover,cust_bank,cust_bank_account,
+		cust_local_tax_no,cust_national_tax_no)
+		values(#{cust_id},#{cust_no},#{cust_name},#{cust_region},#{cust_manager_name},
+		#{cust_level_label},#{cust_satisfy},#{cust_credit},#{cust_addr},#{cust_zip},#{cust_tel},
+		#{cust_fax},#{cust_website},#{cust_licence_no},#{cust_chieftain},
+		#{cust_bankroll},#{cust_turnover},#{cust_bank},#{cust_bank_account},
+		#{cust_local_tax_no},#{cust_national_tax_no})
+	</insert>
+
+	<select id="queryCustomerById" parameterType="int" resultType="Cst_customer">
+		select * from cst_customer where
+		cust_id =#{cust_id}
+	</select>
+
+	<!--更新客户信息,参数类型是Cst_customer -->
+	<update id="updateCustomer" parameterType="Cst_customer">
+		update cst_customer
+		set cust_name = #{cust_name},cust_region = #{cust_region},cust_level =
+		#{cust_level},
+		cust_level_label = #{cust_level_label},cust_satisfy =
+		#{cust_satisfy},
+		cust_credit= #{cust_credit},cust_addr = #{cust_addr},
+		cust_zip = #{cust_zip},cust_tel = #{cust_tel},
+		cust_fax
+		=#{cust_fax},cust_website = #{cust_website},
+		cust_licence_no
+		=#{cust_licence_no},cust_chieftain = #{cust_chieftain},
+		cust_bankroll =
+		#{cust_bankroll},cust_turnover = #{cust_turnover},
+		cust_bank =
+		#{cust_bank},cust_bank_account =
+		#{cust_bank_account},cust_local_tax_no=
+		#{cust_local_tax_no},cust_national_tax_no=#{cust_national_tax_no},cust_status=#{cust_status}
+		where cust_id = #{cust_id}
+	</update>
+
+	<select id="allLinkman" parameterType="int" resultType="Cst_linkman">
+		select *
+		from cst_linkman
+		where lkm_cust_no = #{cust_no}
+	</select>
+
+	<select id="queryLinkmanById" parameterType="int" resultType="Cst_linkman">
+		select * from cst_linkman where
+		lkm_id = #{lkm_id}
+	</select>
+
+	<update id="updateLinkman" parameterType="Cst_linkman">
+		update cst_linkman set
+		lkm_name=#{lkm_name},lkm_sex = #{lkm_sex},lkm_postion =
+		#{lkm_postion},lkm_tel =
+		#{lkm_tel},lkm_mobile = #{lkm_mobile},lkm_memo
+		= #{lkm_memo}
+		where
+		lkm_id = #{lkm_id}
+	</update>
+
+	<!--删除联系人 -->
+	<delete id="deleteLinkMan" parameterType="int">
+		delete from cst_linkman
+		where lkm_id = #{lkm_id}
+	</delete>
+
+	<insert id="addLinkMan" parameterType="Cst_linkman">
+		insert into
+		cst_linkman(lkm_cust_no,lkm_name,lkm_sex,lkm_postion,lkm_tel,lkm_mobile,lkm_memo)
+		values(#{lkm_cust_no},#{lkm_name},#{lkm_sex},#{lkm_postion},#{lkm_tel},#{lkm_mobile},#{lkm_memo})
+	</insert>
+
+	<select id="queryAllAcv" parameterType="int" resultType="Cst_activity">
+		select *
+		from cst_activity
+		where atv_cust_no = #{cust_no}
+	</select>
+
+	<select id="queryAtvById" parameterType="int" resultType="Cst_activity">
+		select
+		* from cst_activity
+		where atv_id = #{atv_id}
+	</select>
+
+	<delete id="deleteAtv" parameterType="int">
+		delete from cst_activity
+		where atv_id = #{atv_id}
+	</delete>
+
+	<update id="updateAtv" parameterType="Cst_activity">
+		update cst_activity
+		set
+		atv_place =#{atv_place},atv_title=#{atv_title},atv_desc=#{atv_desc}
+		where atv_id =#{atv_id}
+	</update>
+
+	<!--添加活动记录 -->
+	<insert id="addCst_activity" parameterType="Cst_activity">
+		insert into
+		cst_activity(atv_cust_no,atv_place,atv_title,atv_desc)
+		values(#{atv_cust_no},#{atv_place},#{atv_title},#{atv_desc})
+	</insert>
+
+	<!--删除客户 -->
+	<delete id="delCustomerById" parameterType="int">
+		delete from
+		cst_customer
+		where cust_no = #{cust_no}
+	</delete>
+
+	<select id="allCustomer" resultType="Cst_customer">
+		select * from cst_customer
+	</select>
+
+</mapper>

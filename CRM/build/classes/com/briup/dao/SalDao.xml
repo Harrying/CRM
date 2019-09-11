@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.SalDao">
+	<select id="getAllRows" resultType="int">
+		select count(*) from
+		sal_chance
+	</select>
+
+	<select id="findSalchanceByPage" resultType="Salchance">
+		select * from
+		sal_chance limit #{param1},#{param2}
+	</select>
+
+	<insert id="saveChance" parameterType="Salchance">
+		insert into
+		sal_chance(chc_id,chc_source,chc_cust_name,chc_rate,chc_title,chc_addr,chc_linkman,chc_tel,chc_desc,chc_status,chc_create_by,chc_due_to)
+		values(#{chc_id},#{chc_source},#{chc_cust_name},#{chc_rate},#{chc_title},#{chc_addr},#{chc_linkman},#{chc_tel},#{chc_desc},'develop',#{chc_create_by},#{chc_due_to})
+	</insert>
+
+	<select id="queryOneSalchance" parameterType="int" resultType="Salchance">
+		select * from
+		sal_chance where chc_id = #{chc_id} 
+	</select>
+
+
+	<delete id="deleteSalchance" parameterType="int">
+		delete from sal_chance
+		where chc_id = #{chc_id}
+	</delete>
+
+	<update id="updatechance" >
+		update sal_chance 
+		set chc_due_to = #{param2.chc_due_to}
+		where chc_id = #{param1}
+	</update>
+	
+
+	<select id="querySalPageByCon" resultType="Salchance">
+		select * from sal_chance
+		where chc_cust_name =#{param3.chc_cust_name} or chc_title
+		=#{param3.chc_title} or chc_linkman=#{param3.chc_linkman} limit
+		#{param1},#{param2}
+	</select>
+
+	<select id="getAllRowss" resultType="int">
+		select count(*) from
+		sal_plan
+	</select>
+
+	<select id="findSalplanByPage" resultType="Salplan">
+		select * from
+		sal_plan limit #{param1},#{param2}
+	</select>
+	
+	<select id="findSalPlans" parameterType="int" resultType="Salplan">
+	   select * from sal_plan
+	   where  pla_chc_id = #{chc_id}
+	</select>
+	
+	<update id="updateSalplan" parameterType="Salplan">
+	   update sal_plan
+	   set pla_todo = #{pla_todo}
+	   where pla_chc_id=#{pla_chc_id}
+	</update>
+	
+	<insert id="savePlan" parameterType="Salplan" useGeneratedKeys="true" keyProperty="pla_id">
+	   insert into sal_plan(pla_todo,pla_chc_id,pla_id)
+	   values(#{pla_todo},#{pla_chc_id},#{pla_chc_id})
+	</insert>
+	
+	<update id="updateSalplan2" parameterType="int">
+	   update sal_chance sc,sal_plan sp set
+	   sc.chc_status = 'success',sp.pla_result='成功'
+	   where chc_id = #{pla_chc_id} and sc.chc_id = sp.pla_chc_id 
+	</update>
+
+    <select id="querySalplan" parameterType="int" resultType="Salplan">
+       select * from sal_plan
+       where pla_chc_id = #{chc_id}
+    </select>
+    
+    <delete id="deleteSalplan" parameterType="int" >
+       delete from sal_plan
+       where pla_id = #{pla_id}
+    </delete>
+</mapper>
