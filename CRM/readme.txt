@@ -1,0 +1,13 @@
+cst_activity  交往记录表
+cst_customer 客户表
+cst_linkman 联系人表
+cst_log 日志表
+cst_service 服务表
+orders 订单表
+orders_line 订单项表
+product 产品表
+sal_chance 销售机会表
+sal_plan 开发机会表
+storage 库存表
+sys_role 角色表
+sys_user 用户表
